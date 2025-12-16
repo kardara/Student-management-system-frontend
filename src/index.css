@@ -1,0 +1,167 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Color Palette for AUCA Student Management System */
+@theme {
+  /* Light Mode Colors */
+  --color-bg-light: #ffffff;
+  /* Main page background - clean white */
+  --color-bg-secondary-light: #f8f9fa;
+  /* Secondary sections, cards - light gray */
+  --color-text-primary-light: #003366;
+  /* Primary text - AUCA navy blue */
+  --color-text-secondary-light: #666666;
+  /* Secondary text - muted gray */
+  --color-border-light: #e0e0e0;
+  /* Borders and dividers - light gray */
+
+  /* Button Styles */
+  --color-button-bg-primary-light: #003366;
+  /* Primary button background - AUCA navy */
+  --color-button-text-primary-light: #ffffff;
+  /* Primary button text - white */
+  --color-button-hover-bg-light: #002244;
+  /* Primary button hover - darker navy */
+
+  --color-primary-light: #003366;
+  /* Primary accent color - AUCA navy */
+  --color-accent-light: #ffd700;
+  /* Accent color - AUCA gold */
+  --color-success-light: #28a745;
+  /* Success indicators - green */
+  --color-error-light: #dc3545;
+  /* Error and negative states - red */
+  --color-link-light: #003366;
+  /* Hyperlinks - AUCA navy */
+
+  /* Dark Mode Colors */
+  --color-bg-dark: #003366;
+  /* Main background - AUCA navy */
+  --color-bg-secondary-dark: #002244;
+  /* Secondary sections - darker navy */
+  --color-text-primary-dark: #ffffff;
+  /* Primary text - white */
+  --color-text-secondary-dark: #cccccc;
+  /* Secondary text - light gray */
+  --color-border-dark: #ffd700;
+  /* Borders - AUCA gold */
+
+  /* Button Styles for Dark Mode */
+  --color-button-bg-primary-dark: #ffd700;
+  /* Primary button background - AUCA gold */
+  --color-button-text-primary-dark: #003366;
+  /* Primary button text - AUCA navy */
+  --color-button-hover-bg-dark: #e6c200;
+  /* Primary button hover - darker gold */
+
+  --color-primary-dark: #ffd700;
+  /* Primary accent color - AUCA gold */
+  --color-accent-dark: #ffffff;
+  /* Accent color - white */
+  --color-success-dark: #28a745;
+  /* Success indicators - green */
+  --color-error-dark: #dc3545;
+  /* Error states - red */
+  --color-link-dark: #ffd700;
+  /* Hyperlinks - AUCA gold */
+}
+
+@utility btn {
+  @apply px-6 py-2.5 cursor-pointer rounded-md font-medium transition-all duration-300 inline-flex items-center justify-center;
+}
+
+@utility btn-primary {
+  @apply btn bg-button-bg-primary-light dark:bg-button-bg-primary-dark text-button-text-primary-light hover:bg-[#2C5282] dark:hover:bg-[#63B3ED];
+}
+
+@utility btn-secondary {
+  @apply btn border border-border-light dark:border-border-dark hover:bg-bg-secondary-light dark:hover:bg-bg-secondary-dark;
+}
+
+@utility section {
+  @apply py-20 px-4 sm:px-8 md:px-12 lg:px-24;
+}
+
+@utility section-title {
+  @apply text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-center;
+}
+
+@utility section-subtitle {
+  @apply text-lg text-text-secondary-light dark:text-text-secondary-dark max-w-3xl mx-auto text-center mb-12;
+}
+
+@utility card {
+  @apply bg-bg-secondary-light dark:bg-bg-secondary-dark rounded-xl p-6 shadow-md transition-all duration-300;
+}
+
+/* Main div */
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+body {
+  @apply bg-bg-light text-text-primary-light dark:bg-bg-dark dark:text-text-primary-dark;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/************** Component ***********/
+/*----- Form ------*/
+
+.inputField {
+  @apply border-2 p-2 pr-8 rounded-lg border-border-light bg-bg-light dark:border-border-dark dark:bg-bg-dark;
+}
+
+.globalSearch {
+  @apply border-2 p-1 rounded-lg border-border-light bg-bg-light dark:border-border-dark dark:bg-bg-dark;
+}
+
+.inputField[type="checkbox"] {
+  @apply w-5;
+}
+
+/* All buttons default */
+.buttonComponent {
+  @apply p-3 bg-button-bg-primary-light hover:bg-button-hover-bg-light text-button-text-primary-light dark:bg-button-bg-primary-dark dark:hover:bg-button-hover-bg-dark dark:text-button-text-primary-dark uppercase font-bold rounded-md;
+}
+
+a.default {
+  @apply text-link-light dark:text-link-dark font-bold hover:bg-accent-light hover:text-bg-secondary-light hover:dark:bg-accent-dark hover:dark:text-bg-secondary-dark;
+}
+
+a#logout {
+  @apply text-error-light dark:text-error-dark;
+}
+
+/* Tables */
+table {
+  @apply border-2 border-border-light dark:border-border-dark max-w-full;
+}
+
+thead tr th {
+  @apply whitespace-nowrap border-2 border-border-light dark:border-border-dark p-2 text-primary-light dark:text-primary-dark font-bold text-center uppercase;
+}
+
+tbody tr td {
+  @apply whitespace-nowrap border-2 border-border-light dark:border-border-dark p-2;
+}
+
+/* studentDetails */
+
+div.st-detail {
+  @apply p-2;
+}
+
+div.st-detail p {
+  @apply text-sm;
+}
+
+div.st-detail p.info {
+  @apply text-lg font-bold;
+}
