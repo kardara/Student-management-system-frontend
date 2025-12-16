@@ -11,16 +11,25 @@ export const ROLES = {
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+    const storedUser = localStorage.getItem("user");
+    const [user, setUser] = useState(storedUser && storedUser !== "undefined" ? JSON.parse(storedUser) : null);
     const [loading, setLoading] = useState(false);
 
-    const updateUser = (a) => {console.log("updating users");setUser(a)}
+    const updateUser = (a) => {
+        console.log("updating users");
+        setUser(a);
+        if (a) {
+            localStorage.setItem("user", JSON.stringify(a));
+        } else {
+            localStorage.removeItem("user");
+        }
+    }
 
     useEffect(() => {
 
         const localUser = localStorage.getItem("user");
-        if (localUser) {
-            setUser(JSON.parse(localUser))            
+        if (localUser && localUser !== "undefined") {
+            setUser(JSON.parse(localUser))
             console.log("user found");
             setLoading(false)
             return;

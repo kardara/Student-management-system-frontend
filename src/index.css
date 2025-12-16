@@ -27,8 +27,8 @@
 
   --color-primary-light: #003366;
   /* Primary accent color - AUCA navy */
-  --color-accent-light: #ffd700;
-  /* Accent color - AUCA gold */
+  --color-accent-light: #0055aa;
+  /* Accent color - lighter navy */
   --color-success-light: #28a745;
   /* Success indicators - green */
   --color-error-light: #dc3545;
@@ -45,27 +45,27 @@
   /* Primary text - white */
   --color-text-secondary-dark: #cccccc;
   /* Secondary text - light gray */
-  --color-border-dark: #ffd700;
-  /* Borders - AUCA gold */
+  --color-border-dark: #ffffff;
+  /* Borders - white */
 
   /* Button Styles for Dark Mode */
-  --color-button-bg-primary-dark: #ffd700;
-  /* Primary button background - AUCA gold */
+  --color-button-bg-primary-dark: #ffffff;
+  /* Primary button background - white */
   --color-button-text-primary-dark: #003366;
   /* Primary button text - AUCA navy */
-  --color-button-hover-bg-dark: #e6c200;
-  /* Primary button hover - darker gold */
+  --color-button-hover-bg-dark: #e0e0e0;
+  /* Primary button hover - light gray */
 
-  --color-primary-dark: #ffd700;
-  /* Primary accent color - AUCA gold */
+  --color-primary-dark: #ffffff;
+  /* Primary accent color - white */
   --color-accent-dark: #ffffff;
   /* Accent color - white */
   --color-success-dark: #28a745;
   /* Success indicators - green */
   --color-error-dark: #dc3545;
   /* Error states - red */
-  --color-link-dark: #ffd700;
-  /* Hyperlinks - AUCA gold */
+  --color-link-dark: #ffffff;
+  /* Hyperlinks - white */
 }
 
 @utility btn {
@@ -128,7 +128,7 @@ body {
 
 /* All buttons default */
 .buttonComponent {
-  @apply p-3 bg-button-bg-primary-light hover:bg-button-hover-bg-light text-button-text-primary-light dark:bg-button-bg-primary-dark dark:hover:bg-button-hover-bg-dark dark:text-button-text-primary-dark uppercase font-bold rounded-md;
+  @apply p-3 cursor-pointer bg-button-bg-primary-light hover:bg-button-hover-bg-light text-button-text-primary-light dark:bg-button-bg-primary-dark dark:hover:bg-button-hover-bg-dark dark:text-button-text-primary-dark uppercase font-bold rounded-md;
 }
 
 a.default {

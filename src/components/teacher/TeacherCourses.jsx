@@ -117,7 +117,7 @@ export default function TeacherCourses() {
                       <span className="text-accent-light dark:text-accent-dark font-semibold">
                         {courseItem.registrations?.length || 0}
                       </span>
-                      /{courseItem.size}
+                      /{courseItem.size || 30}
                     </span>
                   </div>
 

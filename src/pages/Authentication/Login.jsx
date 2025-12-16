@@ -30,7 +30,7 @@ export default function Login() {
   const handleRoleChange = (e) => setRole(e.target.value);
 
   function submit(e) {
-    // e.preventDefault();
+    e.preventDefault();
     if (username.length < 1) {
       toast.warning("Please enter a valid username", {
         theme: localStorage.getItem("theme"),
@@ -49,9 +49,25 @@ export default function Login() {
           theme: localStorage.getItem("theme"),
           position: "top-center",
         });
-        // context.updateUser(JSON.parse(localStorage.getItem("user")))
-        // setTimeout(() => window.location.reload(), 50)
-        navigate(`/auth/login/otp/`);
+        localStorage.setItem("jwtToken", resp.token);
+        localStorage.setItem("semester", JSON.stringify(resp.semester));
+        context.updateUser(resp.user);
+        // Navigate based on role
+        if (resp.role === "ADMIN") {
+          navigate("/admin");
+        } else if (resp.role === "ACCOUNTANT") {
+          navigate("/accountant");
+        } else if (resp.role === "REGISTRAR") {
+          navigate("/registrar");
+        } else if (resp.role === "DEAN" || resp.role === "HOD") {
+          navigate("/academic");
+        } else if (resp.role === "STUDENT") {
+          navigate("/student");
+        } else if (resp.role === "ASSISTANT" || resp.role === "LECTURER") {
+          navigate("/teacher");
+        } else {
+          navigate("/");
+        }
       }
 
       if (!resp.success) {
@@ -73,17 +89,7 @@ export default function Login() {
       <div className="flex min-h-[100vh] place-content-center place-items-center p-5 md:text-lg bg-bg-secondary-light dark:bg-bg-secondary-dark">
         <div className="w-96 md:w-[32rem] p-8 md:p-10 lg:p-12 flex flex-col  gap-1 max-h-min rounded-2xl bg-bg-light dark:bg-bg-dark">
           <div className="flex flex-col items-center">
-            <p
-              className="flex items-center cursor-pointer gap-12"
-              onClick={() => navigate("/")}
-            >
-              <img
-                src="https://yt3.ggpht.com/ytc/AIdro_kxYtR3zxZ06I5vQ41JCt4phG2gudke6oY9WCxoxo5jz_0=s68-c-k-c0x00ffffff-no-rj"
-                className=" rounded-full"
-                alt="AUCA Logo"
-              />
-              {/* <span className="text-xl font-bold text-light-primary dark:text-dark-primary">AUCA</span> */}
-            </p>
+            <img src="https://yt3.ggpht.com/ytc/AIdro_kxYtR3zxZ06I5vQ41JCt4phG2gudke6oY9WCxoxo5jz_0=s68-c-k-c0x00ffffff-no-rj" className='w-16 rounded-full mb-4 cursor-pointer' alt="AUCA Logo" onClick={() => navigate("/")} />
 
             <h1 className="text-center text-xl md:text-2xl font-bold text-primary-light dark:text-primary-dark">
               {t("auth.loginTitle")}
@@ -112,8 +118,12 @@ export default function Login() {
                 {t("auth.forgetPassword")}
               </Link>{" "}
             </p>
-            {/* <SelectLoginRole label={t("auth.loginAs")} value={role} onChange={handleRoleChange} />
-                        <br /> */}
+            <SelectLoginRole
+              label={t("auth.loginAs")}
+              value={role}
+              onChange={handleRoleChange}
+            />
+            <br />
             <Button
               name={t("auth.login")}
               onClick={submit}

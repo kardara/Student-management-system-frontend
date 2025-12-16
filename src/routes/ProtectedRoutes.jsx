@@ -1,32 +1,40 @@
-import React from 'react'
-import { useAuth } from '../contexts/AuthContext'
-import { Navigate } from 'react-router-dom';
+import React from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { Navigate } from "react-router-dom";
 
 export default function ProtectedRoutes({ children, requiredRoles }) {
-    const { user, loading, hasRole } = useAuth();
+  const { user, loading, hasRole } = useAuth();
 
-    console.log(user);
+  console.log(user);
 
-    if (loading) {
-        return <div>Loading ...</div>
+  if (loading) {
+    return <div>Loading ...</div>;
+  }
+
+  let currentUser = user;
+  if (!currentUser) {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser && storedUser !== "undefined") {
+      currentUser = JSON.parse(storedUser);
+    } else {
+      console.log("No user");
+      return <Navigate to="/auth/login" replace />;
     }
+  }
 
-    if (!user) {
-        console.log("No user");
+  // if (requiredRoles && !hasRole(requiredRoles)) {
+  //     return <Navigate to="/unauthorized" replace />;
 
-        return <Navigate to="/auth/login" replace />
-    }
+  // }
+  if (currentUser.role.toLowerCase() != requiredRoles.toLowerCase()) {
+    console.log(
+      currentUser.role.toLowerCase(),
+      "and",
+      requiredRoles.toLowerCase()
+    );
 
-    // if (requiredRoles && !hasRole(requiredRoles)) {
-    //     return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/unauthorized" replace />;
+  }
 
-    // }
-    if (user.role.toLowerCase() != requiredRoles.toLowerCase()) {
-        console.log(user.role.toLowerCase(), "and", requiredRoles.toLowerCase());
-
-        return <Navigate to="/unauthorized" replace />;
-
-    }
-
-    return children;
+  return children;
 }

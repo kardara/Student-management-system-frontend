@@ -44,6 +44,9 @@ import SetNewPassWord from "../pages/Authentication/SetNewPassWord";
 import ForgetPassword from "../pages/Authentication/ForgetPassword";
 import AdminDashboard from "../components/Dashboards/AdminDashboard";
 import StudentDashboard from "../components/Dashboards/StudentDashboard";
+import AcademicDashboard from "../components/Dashboards/AcademicDashboard";
+import AccountantDashboard from "../components/Dashboards/AccountantDashboard";
+import RegistrarDashboard from "../components/Dashboards/RegistrarDashboard";
 import ViewStudentModal from "../components/manageStudent/ViewStudentModal";
 import EditStudentModal from "../components/manageStudent/EditStudentModal";
 import ViewCourseModal from "../components/manageCourse/ViewCourseModal";
@@ -54,230 +57,315 @@ import ManageFinance from "../components/ManageFinance";
 import AttendanceManagement from "../components/teacher/AttendanceManagement";
 import TeacherDashboard from "../components/Dashboards/TeacherDashboard";
 
-
 export const router = createBrowserRouter([
+  /// TESTTT
 
-    /// TESTTT
+  /// Free routes
+  {
+    path: "*",
+    element: <NotFound />,
+  },
+  {
+    path: "unauthorized",
+    element: <Unauthorized />,
+  },
+  {
+    path: "/",
+    element: <Home />,
+  },
 
-    /// Free routes
-    {
-        path: '*',
-        element: <NotFound />
-    },
-    {
-        path: "unauthorized",
-        element: <Unauthorized />
-    },
-    {
-        path: "/",
-        element: <Home />
-    },
+  // only non authenticated users
+  {
+    path: "auth/login",
+    element: (
+      <PublicOnlyRoutes>
+        <Login />
+      </PublicOnlyRoutes>
+    ),
+  },
+  {
+    path: "apply",
+    element: (
+      <PublicOnlyRoutes>
+        <Apply />
+      </PublicOnlyRoutes>
+    ),
+  },
+  {
+    path: "/auth/login/otp",
+    element: (
+      <PublicOnlyRoutes>
+        <OTPVerification />
+      </PublicOnlyRoutes>
+    ),
+  },
+  {
+    path: "auth/signup",
+    element: (
+      <PublicOnlyRoutes>
+        <Signup />
+      </PublicOnlyRoutes>
+    ),
+  },
+  {
+    path: "auth/oauth2/failed",
+    element: (
+      <PublicOnlyRoutes>
+        <OauthFailed />
+      </PublicOnlyRoutes>
+    ),
+  },
+  {
+    path: "auth/oauth2/success",
+    element: (
+      <PublicOnlyRoutes>
+        <OauthRedirect />
+      </PublicOnlyRoutes>
+    ),
+  },
 
-    // only non authenticated users
-    {
-        path: "auth/login",
-        element: <PublicOnlyRoutes><Login /></PublicOnlyRoutes>
-    },
-    {
-        path: "apply",
-        element: <PublicOnlyRoutes><Apply /></PublicOnlyRoutes>
-    },
-    {
-        path: "/auth/login/otp",
-        element: <PublicOnlyRoutes><OTPVerification /></PublicOnlyRoutes>
-    },
-    {
-        path: "auth/signup",
-        element: <PublicOnlyRoutes><Signup /></PublicOnlyRoutes>
-    },
-    {
-        path: "auth/oauth2/failed",
-        element: <PublicOnlyRoutes><OauthFailed /></PublicOnlyRoutes>
-    },
-    {
-        path: "auth/oauth2/success",
-        element: <PublicOnlyRoutes><OauthRedirect /></PublicOnlyRoutes>
-    },
+  {
+    path: "auth/forget-password",
+    element: (
+      <PublicOnlyRoutes>
+        {" "}
+        <ForgetPassword />{" "}
+      </PublicOnlyRoutes>
+    ),
+  },
 
-    {
-        path: "auth/forget-password",
-        element: <PublicOnlyRoutes> <ForgetPassword /> </PublicOnlyRoutes>
-    },
+  {
+    path: "auth/reset-password/",
+    element: (
+      <PublicOnlyRoutes>
+        {" "}
+        <SetNewPassWord />{" "}
+      </PublicOnlyRoutes>
+    ),
+  },
 
-    {
-        path: "auth/reset-password/",
-        element: <PublicOnlyRoutes> <SetNewPassWord /> </PublicOnlyRoutes>
-    },
+  /// ROle based Routes
 
+  {
+    path: "academic",
+    element: <AcademicHome />,
+    children: [
+      {
+        index: true,
+        element: <AcademicDashboard />,
+      },
+      {
+        path: "home",
+        element: <AcademicDashboard />,
+      },
+    ],
+  },
+  {
+    path: "accountant",
+    element: <AccountantHome />,
+    children: [
+      {
+        index: true,
+        element: <AccountantDashboard />,
+      },
+      {
+        path: "home",
+        element: <AccountantDashboard />,
+      },
+    ],
+  },
+  {
+    path: "admin",
+    element: (
+      <ProtectedRoutes requiredRoles="admin">
+        {" "}
+        <AdminHome />{" "}
+      </ProtectedRoutes>
+    ),
+    children: [
+      {
+        index: true,
+        element: <AdminDashboard />,
+      },
+      {
+        path: "home",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "students",
+        element: <ManageStudent />,
+      },
+      {
+        path: "students/view/:studentId",
+        element: <ViewStudentModal />,
+      },
+      {
+        path: "students/edit/:studentId",
+        element: <EditStudentModal />,
+      },
+      {
+        path: "grades",
+        element: <ManageGrade />,
+      },
+      {
+        path: "grades/course/:courseId",
+        element: <CourseGrades />,
+      },
+      {
+        path: "applications",
+        element: <ManageApplications />,
+      },
+      {
+        path: "staff",
+        element: <ManageStaff />,
+      },
+      {
+        path: "attendance",
+        element: <ManageAttendance />,
+      },
+      {
+        path: "academic unit",
+        element: <ManageAcademicUnit />,
+      },
 
+      {
+        path: "teachers",
+        element: <ManageTeacher />,
+      },
+      {
+        path: "teachers/view/:id",
+        element: <ViewTeacherModal />,
+      },
+      {
+        path: "teachers/edit/:id",
+        element: <EditTeacherModal />,
+      },
+      {
+        path: "courses",
+        element: <ManageCourses />,
+      },
+      {
+        path: "courses/view/:courseId",
+        element: <ViewCourseModal />,
+      },
+      {
+        path: "courses/edit/:courseId",
+        element: <EditCourseModal />,
+      },
+      {
+        path: "offeredcourse",
+        element: <ManageOfferedCourse />,
+      },
+      {
+        path: "semesters",
+        element: <ManageSemester />,
+      },
 
-    /// ROle based Routes
+      {
+        path: "finances",
+        element: <ManageFinance />,
+      },
 
-    {
-        path: "academic",
-        element: <AcademicHome />,
-        children: [
-            {
-                index: true, path: "home", element: <p>Home pae</p>
-            }
-        ]
-    },
-    {
-        path: "accountant",
-        element: <AccountantHome />,
-        children: [
-            {
-                index: true, path: "home", element: <p>Home pae</p>
-            }
-        ]
-    },
-    {
-        path: "admin",
-        element: <ProtectedRoutes requiredRoles="admin" > <AdminHome /> </ProtectedRoutes>,
-        children: [
-            {
-                index: true, element: <AdminDashboard />
-            },
-            {
-                path: "home", element: <AdminDashboard />
-            },
-            {
-                path: "students", element: <ManageStudent />
-            },
-            {
-                path: "students/view/:studentId", element: <ViewStudentModal />
-            },
-            {
-                path: "students/edit/:studentId", element: <EditStudentModal />
-            },
-            {
-                path: "grades", element: <ManageGrade />
-            },
-            {
-                path: "grades/course/:courseId", element: <CourseGrades />
-            },
-            {
-                path: "applications", element: <ManageApplications />
-            },
-            {
-                path: "staff", element: <ManageStaff />
-            },
-            {
-                path: "attendance", element: <ManageAttendance />
-            },
-            {
-                path: "academic unit", element: <ManageAcademicUnit />
-            },
+      {
+        path: "registration",
+        element: <ManageRegistration />,
+      },
+      {
+        path: "registration/view/:id",
+        element: <StudentRegistration />,
+      },
+    ],
+  },
+  {
+    path: "registrar",
+    element: <RegisterHome />,
+    children: [
+      {
+        index: true,
+        element: <RegistrarDashboard />,
+      },
+      {
+        path: "home",
+        element: <RegistrarDashboard />,
+      },
+    ],
+  },
 
-            {
-                path: "teachers", element: <ManageTeacher />
-            },
-            {
-                path: "teachers/view/:id", element: <ViewTeacherModal />
-            },
-            {
-                path: "teachers/edit/:id", element: <EditTeacherModal />
-            },
-            {
-                path: "courses", element: <ManageCourses />
-            },
-            {
-                path: "courses/view/:courseId", element: <ViewCourseModal />
-            },
-            {
-                path: "courses/edit/:courseId", element: <EditCourseModal />
-            },
-            {
-                path: "offeredcourse", element: <ManageOfferedCourse />
-            },
-            {
-                path: "semesters", element: <ManageSemester />
-            },
+  {
+    path: "/LECTURER",
+    element: <TeacherHome />,
+    children: [
+      {
+        index: true,
+        element: <TeacherDashboard />,
+      },
+      {
+        index: true,
+        path: "home",
+        element: <TeacherDashboard />,
+      },
+      {
+        path: "courses",
+        element: <TeacherCourses />,
+      },
+      {
+        path: "attendance/:courseId",
+        element: <AttendanceManagement />,
+      },
+      {
+        path: "grades/:courseId",
+        element: <CourseGrades />,
+      },
+      {
+        path: "profile",
+        element: <TeacherProfile />,
+      },
+    ],
+  },
 
-             {
-                path: "finances", element: <ManageFinance />
-            },
+  /////////////////////////////
 
-            {
-                path: "registration", element: <ManageRegistration />
-            },
-            {
-                path: "registration/view/:id", element: <StudentRegistration />
-            },
-
-        ]
-    },
-    {
-        path: "registrar",
-        element: <RegisterHome />,
-        children: [
-            {
-                index: true, path: "home", element: <p>Home pae</p>
-            }
-        ]
-    },
-
-
-    {
-        path: "/LECTURER", element: <TeacherHome />,
-        children: [
-            {
-                index: true, element: <TeacherDashboard />
-
-            },
-            {
-                index: true, path: "home", element: <TeacherDashboard />
-
-            },
-            {
-                path: "courses", element: <TeacherCourses />
-
-            },
-            {
-                path: "attendance/:courseId", element: <AttendanceManagement />
-
-            },
-            {
-                path: "grades/:courseId", element: <CourseGrades />
-
-            },
-            {
-                path: "profile", element: <TeacherProfile />
-
-            }
-        ]
-
-    },
-
-    /////////////////////////////
-
-    {
-        path: 'student',
-        element: <ProtectedRoutes requiredRoles="student" > <StudentHome /> </ProtectedRoutes>,
-        children: [{
-            index: true, element: <StudentDashboard />
-        },
-        {
-            path: "home", element: <StudentDashboard />
-        },
-        {
-            path: "courses", element: <StudentCourse />
-        },
-        {
-            path: "registration", element: <StudentRegistration />
-        },
-        {
-            path: "finances", element: <StudentFinances />
-        },
-        {
-            path: "claims", element: <StudentClaims />
-        },
-        {
-            path: "reports", element: <StudentReport />
-        },
-        {
-            path: "profile", element: <StudentProfile />
-        },
-        ]
-    },
-])
+  {
+    path: "student",
+    element: (
+      <ProtectedRoutes requiredRoles="student">
+        {" "}
+        <StudentHome />{" "}
+      </ProtectedRoutes>
+    ),
+    children: [
+      {
+        index: true,
+        element: <StudentDashboard />,
+      },
+      {
+        path: "home",
+        element: <StudentDashboard />,
+      },
+      {
+        path: "courses",
+        element: <StudentCourse />,
+      },
+      {
+        path: "registration",
+        element: <StudentRegistration />,
+      },
+      {
+        path: "finances",
+        element: <StudentFinances />,
+      },
+      {
+        path: "claims",
+        element: <StudentClaims />,
+      },
+      {
+        path: "reports",
+        element: <StudentReport />,
+      },
+      {
+        path: "profile",
+        element: <StudentProfile />,
+      },
+    ],
+  },
+]);

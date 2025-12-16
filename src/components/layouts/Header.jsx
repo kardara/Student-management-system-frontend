@@ -57,7 +57,7 @@ export default function Header({ head, user }) {
                             </div> : null}
 
                             <div className="font-medium text-accent-light dark:text-accent-dark bg-bg-light dark:bg-bg-dark px-3 py-1 rounded border-l-4 border-border-light dark:border-border-dark">
-                                {`${currentSemester.name[0]}${currentSemester.name.slice(1).toLowerCase()} ${currentSemester.year} - ${(+currentSemester.year + 1 + "").slice(2)}`}
+                                {currentSemester ? `${currentSemester.name[0]}${currentSemester.name.slice(1).toLowerCase()} ${currentSemester.year} - ${(+currentSemester.year + 1 + "").slice(2)}` : 'No Active Semester'}
                             </div>
                         </div>
                     </div>
